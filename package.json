@@ -1,0 +1,24 @@
+{
+  "name": "ultimate-playlist",
+  "version": "1.0.0",
+  "description": "all your music are belong to us",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/httpNick/ultimate-playlist.git"
+  },
+  "author": "httpNick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/httpNick/ultimate-playlist/issues"
+  },
+  "homepage": "https://github.com/httpNick/ultimate-playlist#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+    "spotify-web-api-node": "^2.2.0"
+  }
+}
