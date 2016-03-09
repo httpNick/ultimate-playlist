@@ -1,22 +1,42 @@
-var exp = require('express');
-var app = exp();
-var SpotifyApi = require('spotify-web-api-node');
-var secrets = require('./secrets.json');
+var exp = require('express'),
+    app = exp(),
+    SpotifyApi = require('spotify-web-api-node'),
+    secrets = require('./secrets.json'),
+    passport = require('passport'),
+    SpotifyStrat = require('passport-spotify').Strategy,
+    clientid = secrets.clientid,
+    clientsecret = secrets.clientsecret;
+
+
+passport.serializeUser((user, done) => {
+    done(null, user);
+});
+
+passport.deserializeUser((obj, done) => {
+    done(null, obj);
+});
+
+passport.use(new SpotifyStrat({
+    clientID : clientid,
+    clientSecret : clientsecret,
+    callbackURL : "http://localhost:8080"
+    },
+    function(accessToken, refreshToken, profile, done) {
+        process.nextTick(() => {
+            return done(null, profile);
+        });
+    }
+));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get('/auth/spotify',
+    passport.authenticate('spotify', {scope: ['user-read-private', 'user-read-email'], showDialog: true}),
+    (req, res) => {}
+);
 
 app.get('/login', (req, res) => {
-
-    var scopes = ['user-read-private', 'user-read-email'];
-    var state = 'some-state';
-
-    var spotify = new SpotifyApi({
-        redirectUri : "http://localhost:8080",
-        clientId : secrets.clientid,
-        clientSecret : secrets.clientsecret
-    });
-
-    var authorizeURL = spotify.createAuthorizeURL(scopes, state);
-
-    res.redirect(authorizeURL);
 });
 
 var server = app.listen(8080, () => {

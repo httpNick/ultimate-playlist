@@ -19,6 +19,8 @@
   "homepage": "https://github.com/httpNick/ultimate-playlist#readme",
   "dependencies": {
     "express": "^4.13.4",
+    "passport": "^0.3.2",
+    "passport-spotify": "^0.3.0",
     "spotify-web-api-node": "^2.2.0"
   }
 }
